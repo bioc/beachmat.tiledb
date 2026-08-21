@@ -12,13 +12,13 @@ test_that("initialization works correctly for dense TileDB arrays", {
     expect_identical(beachmat::tatami.row(ptr, 1), y[1,])
     expect_identical(beachmat::tatami.column(ptr, 2), y[,2])
 
-    expect_identical(beachmat::tatami.row.sums(ptr, 2), rowSums(y))
-    expect_identical(beachmat::tatami.column.sums(ptr, 2), colSums(y))
+    expect_equal(beachmat::tatami.sums(ptr, row=TRUE, num.threads=2), rowSums(y))
+    expect_equal(beachmat::tatami.sums(ptr, row=FALSE, num.threads=2), colSums(y))
 
     # Trying some other options. 
     cptr <- initializeCpp(z, tiledb.concurrency.level=2)
-    expect_identical(beachmat::tatami.row.sums(cptr, 2), rowSums(y))
-    expect_identical(beachmat::tatami.column.sums(cptr, 2), colSums(y))
+    expect_equal(beachmat::tatami.sums(cptr, row=TRUE, num.threads=2), rowSums(y))
+    expect_equal(beachmat::tatami.sums(cptr, row=FALSE, num.threads=2), colSums(y))
 })
 
 test_that("initialization works correctly with dense memorization", {
@@ -29,8 +29,8 @@ test_that("initialization works correctly with dense memorization", {
     expect_identical(beachmat::tatami.row(ptr, 1), y[1,])
     expect_identical(beachmat::tatami.column(ptr, 2), y[,2])
 
-    expect_identical(beachmat::tatami.row.sums(ptr, 2), rowSums(y))
-    expect_identical(beachmat::tatami.column.sums(ptr, 2), colSums(y))
+    expect_equal(beachmat::tatami.sums(ptr, row=TRUE, num.threads=2), rowSums(y))
+    expect_equal(beachmat::tatami.sums(ptr, row=FALSE, num.threads=2), colSums(y))
 })
 
 library(Matrix)
@@ -45,13 +45,13 @@ test_that("initialization works correctly for sparse TileDB arrays", {
     expect_identical(beachmat:::tatami.row(ptr, 1), sy[1,])
     expect_identical(beachmat:::tatami.column(ptr, 2), sy[,2])
 
-    expect_identical(beachmat:::tatami.row.sums(ptr, 2), Matrix::rowSums(sy))
-    expect_identical(beachmat:::tatami.column.sums(ptr, 2), Matrix::colSums(sy))
+    expect_equal(beachmat:::tatami.sums(ptr, row=TRUE, num.threads=2), Matrix::rowSums(sy))
+    expect_equal(beachmat:::tatami.sums(ptr, row=FALSE, num.threads=2), Matrix::colSums(sy))
 
     # Trying some other options. 
     cptr <- initializeCpp(sz, tiledb.concurrency.level=2)
-    expect_identical(beachmat::tatami.row.sums(cptr, 2), Matrix::rowSums(sy))
-    expect_identical(beachmat::tatami.column.sums(cptr, 2), Matrix::colSums(sy))
+    expect_equal(beachmat::tatami.sums(cptr, row=TRUE, num.threads=2), Matrix::rowSums(sy))
+    expect_equal(beachmat::tatami.sums(cptr, row=FALSE, num.threads=2), Matrix::colSums(sy))
 })
 
 test_that("initialization works correctly with sparse memorization", {
@@ -62,6 +62,6 @@ test_that("initialization works correctly with sparse memorization", {
     expect_identical(beachmat:::tatami.row(ptr, 1), sy[1,])
     expect_identical(beachmat:::tatami.column(ptr, 2), sy[,2])
 
-    expect_identical(beachmat:::tatami.row.sums(ptr, 2), Matrix::rowSums(sy))
-    expect_identical(beachmat:::tatami.column.sums(ptr, 2), Matrix::colSums(sy))
+    expect_equal(beachmat:::tatami.sums(ptr, row=TRUE, num.threads=2), Matrix::rowSums(sy))
+    expect_equal(beachmat:::tatami.sums(ptr, row=FALSE, num.threads=2), Matrix::colSums(sy))
 })
