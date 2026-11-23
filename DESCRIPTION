@@ -1,5 +1,5 @@
 Package: beachmat.tiledb
-Version: 1.5.2
+Version: 1.6.0
 Date: 2026-08-21
 Title: beachmat bindings for TileDB-backed matrices
 Description: 
